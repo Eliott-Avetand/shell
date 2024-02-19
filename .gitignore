@@ -1,0 +1,20 @@
+# Ignoring temporary file
+*~
+
+# Ignoring objects files
+*.o
+
+# Ignoring binary file and tests
+42sh
+tests/
+emile_local.sh
+
+# Ignoring libmy.a
+lib/libmy.a
+lib/my/libmy.a
+
+# Ignoring valgrind
+vgcore*
+
+# Ignoring .vscode folder
+.vscode

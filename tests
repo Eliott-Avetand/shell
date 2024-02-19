@@ -1,0 +1,358 @@
+[101]
+NAME="empty"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo ''
+[101-END]
+
+[102]
+NAME="segfault without core dump"
+SETUP="ulimit -c 0 ; export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "./test/SegFault"
+[102-END]
+
+[103]
+NAME="simple exec"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo './42sh'
+[103-END]
+
+[104]
+NAME="run simple commands"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls /etc'
+  echo 'cat /etc/resolv.conf'
+  echo 'echo HELLO'
+[104-END]
+
+[105]
+NAME="run simple commands (2)"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'cat /etc/resolv.conf'
+  sleep 0.5
+  echo 'ls -l /etc'
+  sleep 0.5
+  echo 'pwd'
+[105-END]
+
+[106]
+NAME="wrong simple commands"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'azeeaeazeazesdqs'
+  echo 'lsaeaze'
+[106-END]
+
+[201]
+NAME="testing with /usr/bin PATH"
+SETUP="export TERM=xterm ; PATH='/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+  echo 'ls /etc'
+[201-END]
+
+[202]
+NAME="testing with /bin PATH"
+SETUP="export TERM=xterm ; PATH='/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+  echo 'ls /etc'
+[202-END]
+
+[203]
+NAME="testing with empty PATH"
+SETUP="export TERM=xterm ; PATH=''"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+  echo 'ls /etc'
+[203-END]
+
+[301]
+NAME="setenv and unsetenv"
+SETUP="/usr/bin/env > .lstenv ; while read varenv ; do unset $varenv ; done < <(/bin/cat .lstenv | /usr/bin/cut -f1 -d=) ; export PATH=/bin:/usr/bin ; export _=ls ; export LS_COLORS=RID ; export MYBG=4 ; export LVL=4 ; export NOTE=2"
+CLEAN="while read varenv ; do export "$varenv" 2>/dev/null ; done  < <(/bin/cat .lstenv) ; /bin/rm -f .lstenv"
+TESTS=
+  echo 'unsetenv HOSTTYPE'
+  echo 'unsetenv VENDOR'
+  echo 'unsetenv OSTYPE'
+  echo 'unsetenv MACHTYPE'
+  echo 'unsetenv SHLVL'
+  echo 'unsetenv PWD'
+  echo 'unsetenv LOGNAME'
+  echo 'unsetenv USER'
+  echo 'unsetenv GROUP'
+  echo 'unsetenv HOST'
+  echo 'unsetenv REMOTEHOST'
+  echo 'unsetenv _'
+  echo 'unsetenv LS_COLORS'
+  echo 'unsetenv NOTE'
+  echo 'setenv titi'
+  echo 'setenv tata coucou'
+  echo 'env'
+  echo '/usr/bin/env'
+  echo 'setenv var1 val1'
+  echo 'setenv var2 val2'
+[301-END]
+
+[401]
+NAME="cd"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+  echo 'cd /'
+  echo 'pwd'
+  echo 'cd'
+  echo 'pwd'
+  echo 'cd ../'
+  echo 'pwd'
+  echo 'cd ~'
+  echo 'pwd'
+[401-END]
+
+[402]
+NAME="cd and error messages"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'cd azeaze'
+[402-END]
+
+[402]
+NAME="cd and error messages"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls'
+[402-END]
+
+[403]
+NAME="cd-"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+  echo 'cd /'
+  echo 'pwd'
+  echo 'cd -'
+  echo 'pwd'
+[403-END]
+
+[501]
+NAME="spaces"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls     /etc   '
+  echo '    cat      /etc/resolv.conf   '
+[501-END]
+
+[502]
+NAME="tabs"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo -e 'ls\t/etc\t'
+  echo -e '\tcat\t/etc/resolv.conf\t'
+[502-END]
+
+[503]
+NAME="spaces and tabs"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo -e 'ls  \t  \t/etc \t \t'
+  echo -e '    \t\tcat  \t \t/etc/resolv.conf\t\t '
+  echo -e "\t\t    ls\t     \t-l    \t\t  \t -a /usr   \t\t"
+[503-END]
+
+[601]
+NAME="bin not access"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo './test/file_not_acess'
+[601-END]
+
+[602]
+NAME="divzero with core dump"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo './test/DivZero'
+[602-END]
+
+[603]
+NAME="segfault with core dump"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo './test/SegFault'
+[603-END]
+
+[604]
+NAME="exec a directory"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo './test/SimpleDirectory'
+[604-END]
+
+[605]
+NAME="invalid architecture"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo './test/my_invalid'
+[605-END]
+
+[701]
+NAME="separator basic"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls ; echo Hello'
+  echo -e ';;;; ; ;\t ; ; ;; ls ;;\t ; ;; ;; ; echo Hello ; ;\t ; ;'
+[701-END]
+
+[702]
+NAME="multiple separator"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls ; echo Hi ; cat -e tests/Hello_file'
+  echo -e '; \t; ;;;\t ;;; ls ;; ;;;\t ; ; echo Hi\t ; ;;;; ; \tcat -e tests/Hello_file ;;; ; \t;'
+[702-END]
+
+[703]
+NAME="complex separator"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls ; echo Hi ; pwd ; cd / ; pwd ; cd - ; pwd ; cat -e tests/Hello_file'
+  echo -e '; \t; ;;;\t ;;; ls ;; ;;;\t ; ; echo Hi\t ; ;;;; pwd\t;cd /;pwd     ; cd\t\tpwd ; \tcat -e tests/Hello_file ;;; ; \t;'
+[703-END]
+
+[704]
+NAME="AND separator"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'true && echo Things went well'
+  echo 'false && echo Will not be printed'
+[704-END]
+
+[705]
+NAME="OR separator"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'false || echo Oops, fail'
+  echo 'true || echo Will not be printed'
+[705-END]
+
+[801]
+NAME="simple pipe 1"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls | cat -e'
+  echo 'ls | | cat -e'
+  echo -e '|\t ls | cat -e'
+  echo -e '\t ls |\tcat -e |'
+[801-END]
+
+[802]
+NAME="simple pipe 2"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls -l /dev | grep tty | grep 23'
+  echo 'ls -l /dev | grep tty | | grep 23'
+[802-END]
+
+[803]
+NAME="pipe with big input"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls -l /dev | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep tty | grep 23'
+  echo 'echo Lorem ipsum indolore napsum stratius Lorem ipsum indolore napsum stratius Lorem ipsum indolore napsum stratius Lorem ipsum indolore napsum stratius | cat -e'
+[803-END]
+
+[901]
+NAME="simple right redirection"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN="rm toto"
+TESTS=
+  echo 'ls > toto'
+  echo 'cat toto'
+[901-END]
+
+[902]
+NAME="simple left redirection"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'ls > toto'
+  echo 'cat < toto'
+[902-END]
+
+[903]
+NAME="double redirection right"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN="rm toto"
+TESTS=
+  echo 'echo Hello >> toto'
+  echo 'echo Hi >> toto'
+  echo 'echo Bye >> toto'
+[903-END]
+
+[904]
+NAME="right redirection errors"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo '> ls'
+  echo 'ls >'
+  echo 'ls > > toto'
+[904-END]
+
+[905]
+NAME="left redirection errors"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo '< ls'
+  echo 'ls <'
+  echo 'ls < < toto'
+[905-END]
+
+[1001]
+NAME="simple mandatory"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN="rm toto"
+TESTS=
+  echo -e '\techo Hello  ;; ; ls -l /dev | grep tty | grep 23 > toto ;;; cat <etc toto ;; \t ; echo Bye \t'
+[1001-END]
+
+[1002]
+NAME="avanced mandatory"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo -e 'cd ; </etc/hosts od -c | grep xx | wc >> /tmp/z -l ; cd - && echo OK'
+[1002-END]
